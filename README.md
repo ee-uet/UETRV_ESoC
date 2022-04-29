@@ -57,7 +57,7 @@ Out of reset, the _Boot Memory_ is invoked by the core and the processor starts 
 ### Project Demo (Simulation and FPGA)
 Two application [example programs](/examples) are provided for demo purpose. A simple demo program prints hello using the uart interface (`'.\examples\uart'`). The second program demonstrates the working of the motor module and is also illustrated using the demo video. Assuming the compilation tools are available, executing the `'make.bat'` generates `'imem.c'`, which is used by the SPI flash programmer to write the flash. The demo video below further explains the working of the project. 
 
-[<img src="docs/demo.png" alt="demo" width="400"/>](https://www.youtube.com/watch?v=nsFyD8QpKSA)
+[<img src="docs/demo.png" alt="demo" width="500"/>](https://www.youtube.com/watch?v=nsFyD8QpKSA)
 
 The project demo includes an FPGA based implementation to control a DC motor with encoder feedback. The demo project illustrating the motor control configuration is available [here](/examples/motor). 
 
