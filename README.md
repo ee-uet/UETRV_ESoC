@@ -60,7 +60,7 @@ Two application [example programs](/examples) are provided for demo purpose. A s
 
 [<img src="docs/demo.png" alt="demo" width="600"/>](https://www.youtube.com/watch?v=nsFyD8QpKSA)
 
-The project demo includes an FPGA based implementation to control a DC motor with encoder feedback. The demo project illustrating the motor control configuration is available [here](/examples/motor). 
+The project demo includes an FPGA based implementation to control a DC motor with encoder feedback. The demo project illustrating the motor control configuration is available [here](/examples/motor). The FPGA based implementation is available [here](/fpga/).
 
 ### The Bootloader 
 A simple bootloader for SPI flash is implemented and has been integrated in the SoC using preinitialized boot memory (`'.\src\main\scala\memory\bmem.scala'`). The bootloader source code and further details are available [here](/bootloader).
