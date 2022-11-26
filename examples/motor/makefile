@@ -2,10 +2,6 @@ FPGA_SRCS_DIR=../../FPGA/launching_vivado/RVProc_Final/RVProc_Final.srcs/sources
 SCALA_SRC_DIR=../../src/main/scala
 SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
 RTL_DIR=../../rtl
-VLSI_DIR=/home/uetlhr/Documents/SermoPlot_backend/draft_SRAM_blackbox
-CHIPYARD_DIR=/home/uetlhr/Desktop/chipyard/chipyard/vlsi/generated-src/chipyard.TestHarness.SoCTileConfig
-CHIPYARD_TOP=${CHIPYARD_DIR}/chipyard.TestHarness.SoCTileConfig.top.v
-CHIPYARD_MEMS=${CHIPYARD_DIR}/chipyard.TestHarness.SoCTileConfig.top.mems.v
 RV64AS=riscv64-unknown-elf-as
 RV64CC=riscv64-unknown-elf-gcc
 RV64OBJCOPY=riscv64-unknown-elf-objcopy
@@ -33,14 +29,6 @@ ${RTL_DIR}/SoC_Tile_fpga.v:	${RTL_DIR}/SoC_Tile.v
 
 ${RTL_DIR}/SoC_Tile.v:	$(shell find ${SCALA_SRC_DIR})
 	cd ../.. && sbt run
-	cp --force ${RTL_DIR}/SoC_Tile.v ${RTL_DIR}/SoC_Tile_for_backend.v
-
-vlsi:	${VLSI_DIR}/rtl/SoC_Tile_for_backend.v
-
-${VLSI_DIR}/rtl/SoC_Tile_for_backend.v: ${RTL_DIR}/SoC_Tile.v ${CHIPYARD_TOP} ${CHIPYARD_MEMS}
-	cp --force ${RTL_DIR}/SoC_Tile_for_backend.v ${VLSI_DIR}/../draft/rtl/SoC_Tile_for_backend.v
-	cp --force ${RTL_DIR}/SoC_Tile_for_backend.v ${VLSI_DIR}/rtl/SoC_Tile_for_backend_without_SRAM.v
-	cd ${VLSI_DIR}/rtl && make
 
 ${FPGA_SRCS_DIR}/main.mem: build/imem.txt
 	echo "@0" > $@
