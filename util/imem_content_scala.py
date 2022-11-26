@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+#
 #  * Filename :    Boot_Mem_script.py
 
 #  * Date     :    1-1-2022

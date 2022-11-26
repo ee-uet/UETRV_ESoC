@@ -72,7 +72,7 @@ class WBM_DBus extends Module with Config{
   io.wbm.m2s.data := io.dbus.wdata
   io.wbm.m2s.we   := io.dbus.wr_en
   io.wbm.m2s.sel  := Mux(store_type.orR, st_sel_vec, ld_sel_vec)
-  io.wbm.m2s.stb  := io.dbus.rd_en.toBool || io.dbus.wr_en.toBool
+  io.wbm.m2s.stb  := io.dbus.rd_en.asBool || io.dbus.wr_en.asBool
   io.wbm.m2s.cyc  := true.B
 
   io.dbus.rdata   := io.wbm.data_i

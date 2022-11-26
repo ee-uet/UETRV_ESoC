@@ -29,8 +29,8 @@ object WB_InterConnect {
   val UART     = 0x2.U(4.W)
   val SPI      = 0x3.U(4.W)
   val MOTOR1   = 0x4.U(4.W)
-  val MOTOR2    = 0x4.U(4.W)
-  val MOTOR3    = 0x4.U(4.W)
+  val MOTOR2    = 0x5.U(4.W)
+  val MOTOR3    = 0x6.U(4.W)
 }
 
 class WB_InterConnectIO extends Bundle {

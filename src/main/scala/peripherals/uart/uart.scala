@@ -62,7 +62,7 @@ class UART extends Module with UART_Config { // (implicit p: Parameters)
   val control_r  = RegInit(0x0.U(dataBits.W))
   val baud_r     = RegInit(0x8.U(divisorBits.W))
   val status_r   = RegInit(0x0.U(dataBits.W))
-  val int_mask_r = RegInit(0x1.U(dataBits.W))
+  val int_mask_r = RegInit(0x0.U(dataBits.W))
 
   val div        = baud_r // 8.U(c.divisorBits.W)
 
@@ -143,11 +143,7 @@ class UART extends Module with UART_Config { // (implicit p: Parameters)
   }.elsewhen(wr_en && sel_reg_status){
     status_r     := io.wbs.m2s.data(7, 0)
   }.otherwise{
-    status_r     := Cat(status_r(7,2), txm.io.in.ready, status_r(0))   // Registering UART Tx interrupt
+    status_r     := Cat(status_r(7,2), txm.io.in.ready, status_r(0))   // Registering UART Tx interrupt 
   }
 }
 
-// Instantiation of the UART module for Verilog generator
-object Uart_generate extends App {
-  chisel3.Driver.execute(args, () => new UART)
-}

@@ -29,8 +29,6 @@ class WishboneMasterIO extends Bundle with Config {
  * See wbspec_b4.pdf Chapter 2. Interface Specification.
  * */
 
-  override def cloneType: this.type =
-    new WishboneMasterIO().asInstanceOf[this.type]
   val m2s         = new WB_M2S_IO
 /*  val addr_o      = Output(UInt(XLEN.W))
   val data_o      = Output(UInt(XLEN.W)) // DAT_O on master, DAT_I on slave
@@ -53,8 +51,6 @@ class WishboneSlaveIO extends Bundle with Config {
    * See wbspec_b4.pdf Chapter 2. Interface Specification.
    * */
 
-  override def cloneType: this.type =
-    new WishboneSlaveIO().asInstanceOf[this.type]
   val m2s         = Flipped(new WB_M2S_IO)
 /*  val addr_i      = Input(UInt(XLEN.W))
   val data_i      = Input (UInt(XLEN.W)) // DAT_I on master, DAT_O on slave
