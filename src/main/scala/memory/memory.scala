@@ -12,7 +12,7 @@ package memories
 
 import chisel3._
 import chisel3.util._
-import UETRV_ECore.{CONSTANTS, Config, IBusIO}
+import UETRV_ECore.{CONSTANTS, Config, IBusIO, DebugIO}
 import wishbone.WishboneSlaveIO
 import chisel3.util.experimental.loadMemoryFromFile
 
@@ -30,36 +30,15 @@ class IMem extends Module with Config {
 
   // Instruction memory with word aligned reads
   val imem = SyncReadMem(INST_MEM_LEN, UInt(WLEN.W))
-
- // loadMemoryFromFile(imem , imem_init_file)
-
-  // IMEM writing by the bootloader
-  val addr  = io.imem_addr
-  val wdata = io.imem_wdata
-  val st_type = io.st_type
+  
+  val inst_address = io.imem_addr >> 2
 
   // Memory write operation
   when (io.wr_en) {
-    imem(io.imem_addr / 4.U) := wdata
+    imem(inst_address) := io.imem_wdata
   }
-/*  when (io.wr_en) {
-    when (st_type(0).toBool) {
-      imem(addr) := wdata(7, 0)
-    }
-    when (st_type(1).toBool) {
-      imem(addr + 1.U) := wdata(15, 8)
-    }
-    when (st_type(2).toBool) {
-      imem(addr + 2.U) := wdata(23, 16)
-    }
-    when (st_type(3).toBool) {
-      imem(addr + 3.U) := wdata(31, 24)
-    }
-  }
-*/
   // Read data from IMEM
-  io.imem_rdata := imem(io.imem_addr / 4.U)
-
+  io.imem_rdata := imem(inst_address)
 }
 
 /*******   Data memory implementation    ******/
@@ -74,31 +53,32 @@ class DMem_IO extends Bundle with Config {
 class DMem extends Module with Config {
   val io = IO(new DMem_IO)
 
+  val granularityPowerOf2: Int = log2Ceil(WB_SEL_SIZE)
+
   // Data memory is synchronous read and synchronous write
-  val dmem  = SyncReadMem(DATA_MEM_LEN, UInt(BLEN.W))
+  val dmem = SyncReadMem(DATA_MEM_LEN/WB_SEL_SIZE, Vec(WB_SEL_SIZE, UInt(BLEN.W)))
 
-  val addr  = io.dmem_addr
-  val wdata = io.dmem_wdata
-  val st_type = io.st_type
+  val addr = io.dmem_addr >> granularityPowerOf2
 
-  // Memory write operation
-  when (io.wr_en) {
-    when (st_type(0).toBool) {
-      dmem(addr) := wdata(7, 0)
-    }
-    when (st_type(1).toBool) {
-      dmem(addr + 1.U) := wdata(15, 8)
-    }
-    when (st_type(2).toBool) {
-      dmem(addr + 2.U) := wdata(23, 16)
-    }
-    when (st_type(3).toBool) {
-      dmem(addr + 3.U) := wdata(31, 24)
-    }
+  val mask_shift = io.dmem_addr(granularityPowerOf2 - 1, 0)
+  val data_shift = mask_shift << (WB_SEL_SIZE - 1)
+
+  val wmask = io.st_type.rotateLeft(mask_shift)
+  val wmask_vec = Wire(Vec(WB_SEL_SIZE, Bool()))
+  wmask_vec := VecInit((wmask & Fill(WB_SEL_SIZE, io.wr_en)).asBools)   // AND wr_en with all bits of wmask, and connect the result to wmask_vec
+
+  val wdata = io.dmem_wdata.rotateLeft(data_shift)
+  val wdata_vec = Wire(Vec(WB_SEL_SIZE, UInt(BLEN.W)))
+  for (k <- 0 to WB_SEL_SIZE - 1) {
+    wdata_vec(k) := wdata((k + 1)*BLEN - 1, k*BLEN)   // connect each byte of wdata with each byte of wdata_vec
   }
 
-  // Read word size data from memory. Actual size will be managed by load/store unit
-  val rdata = Wire(UInt(XLEN.W))
-  rdata := Cat(dmem(addr + 3.U), dmem(addr + 2.U), dmem(addr + 1.U), dmem(addr))
-  io.dmem_rdata := rdata
+  when (io.wr_en) {
+    dmem.write(addr, wdata_vec, wmask_vec)
+  }
+
+  val old_data_shift = Reg(UInt(data_shift.getWidth.W))
+  old_data_shift := data_shift
+
+  io.dmem_rdata := dmem(addr).asUInt.rotateRight(old_data_shift)
 }

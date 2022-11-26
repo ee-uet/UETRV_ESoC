@@ -26,6 +26,9 @@ class PWM_IO extends Bundle {
   val reg_duty_we = Input(Bool())
   val reg_duty_di = Input(UInt(32.W))
   val reg_duty_do = Output(UInt(32.W))
+  val reg_step_we = Input(Bool())
+  val reg_step_di = Input(UInt(32.W))
+  val reg_step_do = Output(UInt(32.W))
 
   val reg_pid_out = Input(SInt(16.W))
 
@@ -33,6 +36,10 @@ class PWM_IO extends Bundle {
   val pwm_l       = Output(Bool())
   val irq_out     = Output(Bool())
   val rawirq_out  = Output(Bool())
+
+  // inputs for homing switches
+  val x_homed     = Input(Bool())
+  val y_homed     = Input(Bool())
 }
 
 class PWM extends Module {
@@ -45,7 +52,6 @@ class PWM extends Module {
   val value_reload    = RegInit(UInt(32.W), 0x0FF.U)
   val pwm_duty        = RegInit(UInt(32.W), 0.U)
   val reg_duty        = RegInit(UInt(32.W), 0.U)
-
 
   val value_cur_plus  = Wire(UInt(32.W))  // Next value, on up-count
   val value_cur_minus = Wire(UInt(32.W))  // Next value, on down-count
@@ -71,10 +77,24 @@ class PWM extends Module {
   // PWM deadband configuration bit field
   val pwm_db          = RegInit(UInt(4.W), 2.U)
 
+  // outputs for stepper motor, set and reset by software
+  val step1step       = RegInit(Bool(), true.B)
+  val step1dir        = RegInit(Bool(), true.B)
+  val step2step       = RegInit(Bool(), true.B)
+  val step2dir        = RegInit(Bool(), true.B)
+
   // PWM implementation and duty_cycle register read/write
   io.reg_duty_do      := pwm_duty
   when(io.reg_duty_we) {
     reg_duty := io.reg_duty_di
+  }
+
+  io.reg_step_do      := Cat(0.U(26.W), step1step, step1dir, step2step, step2dir, io.x_homed, io.y_homed)
+  when(io.reg_step_we) {
+    step1step         := io.reg_cfg_di(5)
+    step1dir          := io.reg_cfg_di(4)
+    step2step         := io.reg_cfg_di(3)
+    step2dir          := io.reg_cfg_di(2)
   }
 
   when(stop_out) {

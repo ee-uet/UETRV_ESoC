@@ -37,10 +37,10 @@ class TileIO extends Bundle {
 
 }
 
-trait Tile_Base extends core.BaseModule {
+trait Tile_Base extends chisel3.experimental.BaseModule {
   def io: TileIO
   def clock: Clock
-  def reset: core.Reset
+  def reset: Reset
 }
 
 class SoC_Tile extends Module with Tile_Base {
@@ -75,7 +75,7 @@ class SoC_Tile extends Module with Tile_Base {
   core.io.irq.m3_irq := wb_inter_connect.io.m3_irq
 }
 
-object SoC_Generate extends App {
-  chisel3.Driver.execute(Array("--target-dir", "rtl/"), () => new SoC_Tile)
+object SoC_Tile_Driver extends App {
+  (new chisel3.stage.ChiselStage).emitVerilog(new SoC_Tile, Array("--target-dir", "rtl/"))
 }
 

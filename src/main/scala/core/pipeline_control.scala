@@ -110,7 +110,7 @@ class Control extends Module {
 
   // Control signals for fetch
   io.pc_sel    := ctrlSignals(0)
-  io.inst_kill := ctrlSignals(6).toBool 
+  io.inst_kill := ctrlSignals(6).asBool 
 
   // Control signals for execute
   io.a_sel      := ctrlSignals(1)
@@ -123,7 +123,7 @@ class Control extends Module {
   // Control signals for write back
   io.ld_type    := ctrlSignals(8)
   io.wb_mux_sel := ctrlSignals(9)
-  io.wb_en      := ctrlSignals(10).toBool
+  io.wb_en      := ctrlSignals(10).asBool
   io.csr_cmd    := ctrlSignals(11)
   io.illegal    := ctrlSignals(12)
   io.en_rs1     := ctrlSignals(13)

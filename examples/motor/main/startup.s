@@ -1,6 +1,5 @@
 
 .equ CSR_MSTATUS, 0x300
-.equ MSTATUS_MIE, 0x00000008
 .equ CSR_MTVEC,   0x305
 .equ NOP,         0x00000013              
 
@@ -34,7 +33,9 @@ vtable:
   j        default_interrupt_handler
   j        uart_handler
   j        default_interrupt_handler
+#  j        motor_pwm_handler
   j        default_interrupt_handler
+  j        stepper_motor_pwm_handler
   j        default_interrupt_handler
 
 # Weak aliases to point each exception handler to the
@@ -47,6 +48,10 @@ vtable:
   .set  mtip_handler, default_interrupt_handler
   .weak uart_handler
   .set  uart_handler, default_interrupt_handler
+#  .weak motor_pwm_handler
+#  .set  motor_pwm_handler, default_interrupt_handler
+  .weak stepper_motor_pwm_handler
+  .set  stepper_motor_pwm_handler, default_interrupt_handler
 
 # Assembly 'reset handler' function to initialize core CPU registers.
 .section .text.default_interrupt_handler,"ax",%progbits

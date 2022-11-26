@@ -335,7 +335,3 @@ class SPI extends Module with SPI_Config { // (implicit p: Parameters)
     }
 }
 
-// Instantiation of the UART module for Verilog generator
-object SPI_generate extends App {
-  chisel3.Driver.execute(args, () => new SPI)
-}

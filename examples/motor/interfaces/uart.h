@@ -4,6 +4,7 @@
 #define UART_TX_R       *(volatile char *)(0x2001)
 #define UART_RX_R       *(volatile char *)(0x2000)
 #define UART_STATUS_R   *(volatile char *)(0x2004)
+#define UART_INT_MASK_R *(volatile char *)(0x2005)
 
 // Baud rate divisor
 #define UART_BAUD_DIV   217

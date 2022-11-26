@@ -23,13 +23,13 @@ trait Config {
   val BUSW           = 16
   val WLEN           = 32
   val XLEN           = 32
-  val INST_MEM_LEN   = 2048    // Memory size in words (1024 words = 4096 Bytes)
+  val INST_MEM_LEN   = 512     // Memory size in words (1024 words = 4096 Bytes)
   val IMEM_SIZE      = log2Ceil(INST_MEM_LEN)-2      // 512 words
   val REG_LEN        = 5
   val REGFILE_LEN    = 32
   val OPCODE_LEN     = 7
-  val DATA_MEM_LEN   = 2048     // Memory size in bytes and is word addressable
-  val DMEM_SIZE      = log2Ceil(DATA_MEM_LEN)-2     // 256 words
+  val DATA_MEM_LEN   = 256     // Memory size in bytes and is word addressable
+  val DMEM_SIZE      = log2Ceil(DATA_MEM_LEN)-2     
   val BOOT_MEM_LEN   = 1024    // Memory size in bytes and is byte addressable
 
 

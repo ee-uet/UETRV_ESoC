@@ -38,13 +38,13 @@ void UART_Tx(uint8_t tx_data) {
  ************************************************************************/
 void UART_Isr(void){
      
-	// clear the Uart Interrupt	
-	char status, rx_data;
+  // clear the Uart Interrupt	
+  char status, rx_data;
   status = UART_STATUS_R;
   rx_data = UART_RX_R;
 
-  Motor_Speed(rx_data);
   UART_STATUS_R = UART_STATUS_R & (0xFE);  // Clear the UART Rx interrupt
+  draw_command(rx_data);
 }
 
 

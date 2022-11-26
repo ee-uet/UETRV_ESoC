@@ -58,7 +58,7 @@ class Datapath extends Module with Config {
   val ctrl_pc_check    = Reg(Bool())
  
   /****** Fetch *****/
-  val notstarted = RegNext(reset.toBool)
+  val notstarted = RegNext(reset.asBool)
   // MT stall is used to stall the pipeline due to load-use hazard or dbus/ibus delayed ack
   val stall      = WireInit(false.B)
   val pc         = RegInit(CONSTANTS.PC_START.U(XLEN.W) - 4.U(XLEN.W))
@@ -154,7 +154,7 @@ class Datapath extends Module with Config {
   /**************   Stall and exception handling of the pipeline ************/
   // MT Pipelining control signals updation for exception/interrupt, stall and normal conditions
   // MT -- TO DO -- what if we have stall and exception simultaneously?
-  when(reset.toBool || !stall && csr.io.expt) {
+  when(reset.asBool || !stall && csr.io.expt) {
     ctrl_st_type      := 0.U
     ctrl_ld_type      := 0.U
     ctrl_wb_en        := false.B

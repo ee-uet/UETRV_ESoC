@@ -21,6 +21,18 @@ class MotorGPIO extends Bundle {
   // PWM IOs
   val pwm_high    =  Output(Bool())
   val pwm_low     =  Output(Bool())
+
+  // Stepper motor homing inputs
+  val x_homed  = Input(Bool())
+  val y_homed  = Input(Bool())
+
+  // Stepper motor step pulse outputs (currently unused, motors are being stepped by PWM's low-side outputs instead of these flags)
+  val step1step   =  Output(Bool())
+  val step2step   =  Output(Bool())
+
+  // Stepper motor direction outputs
+  val step1dir    =  Output(Bool())
+  val step2dir    =  Output(Bool())
 }
 
 
@@ -56,6 +68,9 @@ class Motor_Top extends Module{
   /********* Timer module IO connections    *********/
   val pwm                   = Module(new PWM)
 
+  pwm.io.x_homed            := io.motor_gpio.x_homed
+  pwm.io.y_homed            := io.motor_gpio.y_homed
+
   pwm.io.reg_val_we         := interlink.io.tmr_val_we
   pwm.io.reg_val_di         := bus_dat_i
   interlink.io.tmr_val_do   :=  pwm.io.reg_val_do
@@ -64,12 +79,21 @@ class Motor_Top extends Module{
   pwm.io.reg_cfg_di         := bus_dat_i
   interlink.io.tmr_cfg_do   :=  pwm.io.reg_cfg_do
 
+  pwm.io.reg_step_we        := interlink.io.tmr_step_we
+  pwm.io.reg_step_di        := bus_dat_i
+  interlink.io.tmr_step_do  :=  pwm.io.reg_step_do
+
   pwm.io.reg_dat_we         := interlink.io.tmr_dat_we
   pwm.io.reg_dat_di         := bus_dat_i
   interlink.io.tmr_dat_do   :=  pwm.io.reg_dat_do
   pwm.io.reg_duty_we        := interlink.io.tmr_duty_we
   pwm.io.reg_duty_di        := bus_dat_i
   interlink.io.tmr_duty_do  :=  pwm.io.reg_duty_do
+
+  io.motor_gpio.step1step   := pwm.io.reg_step_do(5)
+  io.motor_gpio.step1dir    := pwm.io.reg_step_do(4)
+  io.motor_gpio.step2step   := pwm.io.reg_step_do(3)
+  io.motor_gpio.step2dir    := pwm.io.reg_step_do(2)
 
   // PID output
   val pid_out               = Wire(SInt(16.W))
@@ -131,6 +155,3 @@ class Motor_Top extends Module{
   pid.io.raw_irq            := pwm.io.rawirq_out
 }
 
-object Motor_generate extends App {
-  chisel3.Driver.execute(args, () => new Motor_Top)
-}

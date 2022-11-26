@@ -23,6 +23,7 @@ trait Config {
   val TM_VALUE     = "h004".U(12.W)
   val TM_DATA      = "h008".U(12.W)
   val TM_DUTY      = "h00C".U(12.W)
+  val TM_STEP      = "h010".U(12.W)   // stepper motor configuration register
 
   // QEI register offset addresses
   val QEI_COUNT    = "h100".U(12.W)
@@ -57,6 +58,8 @@ class InterLinkIO extends Bundle {
   val tmr_duty_do  = Input(UInt(32.W))
   val tmr_cfg_we   = Output(Bool())
   val tmr_cfg_do   = Input(UInt(32.W))
+  val tmr_step_we  = Output(Bool())
+  val tmr_step_do  = Input(UInt(32.W))
 
   val qei_count_we = Output(Bool())
   val qei_count_do = Input(UInt(32.W))
@@ -90,6 +93,7 @@ class Interlink_Module extends Module with Config{
 
   // timer module register read/write related definitions
   val tmr_cfg_do    = Wire(UInt(32.W))
+  val tmr_step_do   = Wire(UInt(32.W))
   val tmr_val_do    = Wire(UInt(32.W))
   val tmr_dat_do    = Wire(UInt(32.W))
   val tmr_duty_do   = Wire(UInt(32.W))
@@ -101,17 +105,19 @@ class Interlink_Module extends Module with Config{
   val tmr_val_sel   = WireInit(Bool(), bus_valid && base_adr_sel && (reg_offset === TM_VALUE))
   val tmr_dat_sel   = WireInit(Bool(), bus_valid && base_adr_sel && (reg_offset === TM_DATA))
   val tmr_duty_sel  = WireInit(Bool(), bus_valid && base_adr_sel && (reg_offset === TM_DUTY))
+  val tmr_step_sel  = WireInit(Bool(), bus_valid && base_adr_sel && (reg_offset === TM_STEP))
 
   val tmr_cfg_we    = WireInit(Bool(), Mux((tmr_cfg_sel), (io.bus_sel_i(0) & Cat(io.bus_we_i)), "b0".U(1.W)))
   val tmr_val_we    = WireInit(Bool(), Mux((tmr_val_sel), (io.bus_sel_i(0) & Cat(io.bus_we_i)), "b0".U(1.W)))
   val tmr_dat_we    = WireInit(Bool(), Mux((tmr_dat_sel), (io.bus_sel_i(0) & Cat(io.bus_we_i)), "b0".U(1.W)))
   val tmr_duty_we   = WireInit(Bool(), Mux((tmr_duty_sel), (io.bus_sel_i(0) & Cat(io.bus_we_i)), "b0".U(1.W)))
+  val tmr_step_we   = WireInit(Bool(), Mux((tmr_step_sel), (io.bus_sel_i(0) & Cat(io.bus_we_i)), "b0".U(1.W)))
 
   val reg_dat_re    = WireInit(Bool(), tmr_dat_sel &&  !(io.bus_sel_i =/= 0.U) &&  ~io.bus_we_i)
 
-  val tmr_sel       = tmr_cfg_sel || tmr_val_sel || tmr_dat_sel || tmr_duty_sel
+  val tmr_sel       = tmr_cfg_sel || tmr_val_sel || tmr_dat_sel || tmr_duty_sel || tmr_step_sel
   val tmr_do        = Mux((tmr_cfg_sel), tmr_cfg_do, Mux((tmr_val_sel), tmr_val_do,
-                      Mux(tmr_duty_sel, tmr_duty_do, tmr_dat_do)))
+                      Mux(tmr_duty_sel, tmr_duty_do, Mux(tmr_step_sel, tmr_step_do, tmr_dat_do))))
 
 
   val qei_count_do  = Wire(UInt(32.W))
@@ -179,6 +185,8 @@ class Interlink_Module extends Module with Config{
   tmr_duty_do       := io.tmr_duty_do
   io.tmr_cfg_we     := tmr_cfg_we
   tmr_cfg_do        := io.tmr_cfg_do
+  io.tmr_step_we    := tmr_step_we
+  tmr_step_do       := io.tmr_step_do
 
   io.qei_count_we   := qei_count_we
   qei_count_do      := io.qei_count_do

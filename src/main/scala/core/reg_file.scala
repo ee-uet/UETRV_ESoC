@@ -30,6 +30,12 @@ class RegFile extends Module with Config {
   // decode and execute implementation
   val regs = Mem(REGFILE_LEN, UInt(XLEN.W))
 
+//  when(reset.asBool) {
+//    for (i <- 0 to (REGFILE_LEN - 1)) {
+//      regs(i) := 0.U(XLEN.W)
+//    }
+//  }
+
   io.rdata_1 := Mux((io.raddr_1.orR), regs(io.raddr_1), 0.U)
   io.rdata_2 := Mux((io.raddr_2.orR), regs(io.raddr_2), 0.U)
 

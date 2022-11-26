@@ -109,6 +109,3 @@ class Quad_Encoder extends Module {
   }
 }
 
-object QEI_Generate extends App {
-  chisel3.Driver.execute(args, () => new Quad_Encoder)
-}

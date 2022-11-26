@@ -44,9 +44,9 @@ class IMem_Interface extends Module with Config {
   // One interface is instruction-memory bus (IBus) while other is Wishbone
 
   // Address generation from the interfaces
-  val ibus_imem_addr      = io.ibus.addr(log2Ceil(INST_MEM_LEN)-1, 0)
+  val ibus_imem_addr      = io.ibus.addr(log2Ceil(INST_MEM_LEN)+1, 0)
   val ibus_bmem_addr      = io.ibus.addr(log2Ceil(BOOT_MEM_LEN)-1, 0)
-  val wbs_imem_addr       = io.wbs.m2s.addr(log2Ceil(INST_MEM_LEN)-1, 0)
+  val wbs_imem_addr       = io.wbs.m2s.addr(log2Ceil(INST_MEM_LEN)+1, 0)
 
  // val ibus_bmem_sel  = io.ibus.addr(BMEM_ADDR_HIGH, BMEM_ADDR_LOW) === MEM_ADDR.BMEM
 

@@ -144,11 +144,11 @@ class CSR extends Module with Config {
   val mtval      = Reg(Bits(XLEN.W))
 
   // MT -- configure the critical register fields on reset
-  when(reset.toBool)
+  when(reset.asBool)
   {
     mie.motor3ie  := false.B
-    mie.motor2ie  := false.B
-    mie.motor1ie  := false.B
+    mie.motor2ie  := true.B
+    mie.motor1ie  := true.B
     mie.spiie    := false.B
     mie.uartie   := true.B
     mstatus.mie  := true.B

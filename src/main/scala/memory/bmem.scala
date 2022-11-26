@@ -10,7 +10,7 @@
  package memories                                        
 import chisel3._                                           
 import chisel3.util._                                      
-import riscv_uet.{CONSTANTS, Config, IBusIO}               
+import UETRV_ECore.{CONSTANTS, Config, IBusIO}
 import chisel3.util.experimental.loadMemoryFromFile        
 /*******   Boot memory implementation    ******/           
 class BMem_IO extends Bundle with Config {                 
