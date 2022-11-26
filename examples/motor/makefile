@@ -1,4 +1,4 @@
-FPGA_SRCS_DIR=../../fpga
+FPGA_SRCS_DIR=../../FPGA/launching_vivado/RVProc_Final/RVProc_Final.srcs/sources_1/new
 SCALA_SRC_DIR=../../src/main/scala
 SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
 RTL_DIR=../../rtl
@@ -21,10 +21,10 @@ run:	all
 	cd ${FPGA_SRCS_DIR} && cd ../../../.. && make
 	# gnome-terminal -- ./receive_pos.py
 
-fpga:	${FPGA_SRCS_DIR}/rtl/SoC_Tile.v
+fpga:	${FPGA_SRCS_DIR}/ProcFinal.v
 
-${FPGA_SRCS_DIR}/rtl/SoC_Tile.v:	${RTL_DIR}/SoC_Tile_fpga.v
-	cp --force ${RTL_DIR}/SoC_Tile_fpga.v ${FPGA_SRCS_DIR}/rtl/SoC_Tile.v
+${FPGA_SRCS_DIR}/ProcFinal.v:	${RTL_DIR}/SoC_Tile_fpga.v
+	cp --force ${RTL_DIR}/SoC_Tile_fpga.v ${FPGA_SRCS_DIR}/ProcFinal.v
 
 ${RTL_DIR}/SoC_Tile_fpga.v:	${RTL_DIR}/SoC_Tile.v
 	../../util/fpga/get_verilog_module_from_file.py ${RTL_DIR}/SoC_Tile.v IMem ../../util/fpga/IMem_vlsi.txt
