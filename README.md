@@ -1,3 +1,5 @@
+## update tb and imem.txt
+
 ## UETRV_ESoC  
 UETRV_ESoC is a RISC-V based Embedded class SoC integrating 3-stage pipelined core with multiple peripherals for embedded applications. Currently, the core implements RV32I ISA based on User-level ISA Version 2.0 and Privileged Architecture Version 1.11 supporting machine mode only. The core does not have any structural hazards, while data hazards are resolved using forwarding and stalling. Following is the status of current implementation:
 
