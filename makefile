@@ -1,3 +1,6 @@
+all:	fpga
+	cd examples/motor && make
+
 fpga:	FORCE
 	cd examples/motor && make fpga
 
