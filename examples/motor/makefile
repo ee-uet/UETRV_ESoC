@@ -2,6 +2,10 @@ FPGA_SRCS_DIR=../../FPGA/launching_vivado/RVProc_Final/RVProc_Final.srcs/sources
 SCALA_SRC_DIR=../../src/main/scala
 SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
 RTL_DIR=../../rtl
+GCC_BIN_DIR=../../util/riscv_gcc_v10_1_ubuntu/bin
+#export PATH:=$(PWD)/${GCC_BIN_DIR}:$(PATH)
+PATH  := $(PATH):$(PWD)/${GCC_BIN_DIR}
+SHELL := env PATH=$(PATH) /bin/bash
 RV64AS=riscv64-unknown-elf-as
 RV64CC=riscv64-unknown-elf-gcc
 RV64OBJCOPY=riscv64-unknown-elf-objcopy
@@ -65,7 +69,7 @@ build/uart.o:	interfaces/uart.c interfaces/uart.h
 
 build/main.o:	main/main.c main/defs.h
 	mkdir -p $(@D)
-	${RV64CC} -c -o $@ $< ${CFLAGS}
+	${RV64CC} -c -o $@ $< ${CFLAGS} 
 
 build:
 	mkdir build
@@ -73,5 +77,4 @@ build:
 clean:
 	# if [ -d 'build' ]; then gio trash build; fi
 	rm -rf build
-
 
