@@ -1,0 +1,79 @@
+module IMem( // @[:@2003.2]
+  input         clock, // @[:@2004.4]
+  input  [31:0] io_imem_addr, // @[:@2006.4]
+  output [31:0] io_imem_rdata, // @[:@2006.4]
+  input  [31:0] io_imem_wdata, // @[:@2006.4]
+  input         io_wr_en // @[:@2006.4]
+);
+  // reg [31:0] imem [0:2047]; // @[memory.scala 32:25:@2008.4]
+  wire [11:0] inst_address;
+  
+  reg [31:0] _RAND_0;
+  wire [31:0] imem__T_24_data; // @[memory.scala 32:25:@2008.4]
+  wire [10:0] imem__T_24_addr; // @[memory.scala 32:25:@2008.4]
+  wire [31:0] imem__T_20_data; // @[memory.scala 32:25:@2008.4]
+  wire [10:0] imem__T_20_addr; // @[memory.scala 32:25:@2008.4]
+  wire  imem__T_20_mask; // @[memory.scala 32:25:@2008.4]
+  wire  imem__T_20_en; // @[memory.scala 32:25:@2008.4]
+  wire [31:0] _T_18; // @[memory.scala 43:23:@2010.6]
+  wire [10:0] _T_19; // @[memory.scala 43:9:@2011.6]
+  wire  _GEN_3; // @[memory.scala 42:19:@2009.4]
+  reg [10:0] imem__T_24_addr_pipe_0;
+  reg [31:0] _RAND_1;
+  assign imem__T_24_addr = imem__T_24_addr_pipe_0;
+  // assign imem__T_24_data = imem[imem__T_24_addr]; // @[memory.scala 32:25:@2008.4]
+  assign imem__T_20_data = io_imem_wdata;
+  assign imem__T_20_addr = _T_18[10:0];
+  assign imem__T_20_mask = 1'h1;
+  assign imem__T_20_en = io_wr_en;
+  assign _T_18 = io_imem_addr / 32'h4; // @[memory.scala 43:23:@2010.6]
+  assign _T_19 = _T_18[10:0]; // @[memory.scala 43:9:@2011.6]
+  assign _GEN_3 = 1'h1; // @[memory.scala 42:19:@2009.4]
+  assign io_imem_rdata = imem__T_24_data; // @[memory.scala 61:17:@2018.4]
+
+  assign inst_address = io_imem_addr/4;                                                 // ADDRESS INDEX CHANGED
+  instr_mem IM(inst_address, clock,io_wr_en, reset, io_imem_rdata );
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE
+  integer initvar;
+  initial begin
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      #0.002 begin end
+    `endif
+  _RAND_0 = {1{`RANDOM}};
+  `ifdef RANDOMIZE_MEM_INIT
+  for (initvar = 0; initvar < 2048; initvar = initvar+1)
+    imem[initvar] = _RAND_0[31:0];
+  `endif // RANDOMIZE_MEM_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_1 = {1{`RANDOM}};
+  imem__T_24_addr_pipe_0 = _RAND_1[10:0];
+  `endif // RANDOMIZE_REG_INIT
+  end
+`endif // RANDOMIZE
+  always @(posedge clock) begin
+    // if(imem__T_20_en & imem__T_20_mask) begin
+    //   imem[imem__T_20_addr] <= imem__T_20_data; // @[memory.scala 32:25:@2008.4]
+    // end
+    if (_GEN_3) begin
+      imem__T_24_addr_pipe_0 <= _T_19;
+    end
+  end
+endmodule

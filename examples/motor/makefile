@@ -1,4 +1,4 @@
-FPGA_SRCS_DIR=../../FPGA/launching_vivado/RVProc_Final/RVProc_Final.srcs/sources_1/new
+FPGA_SRCS_DIR=../../fpga
 SCALA_SRC_DIR=../../src/main/scala
 SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
 RTL_DIR=../../rtl
