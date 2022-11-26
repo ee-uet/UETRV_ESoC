@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="wrapperProc_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="wrapperProc_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="4533333333333fs"></ZoomStartTime>
+      <ZoomEndTime time="18293333333334fs"></ZoomEndTime>
+      <Cursor1Time time="16000000000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="82"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="12" />
+   <wvobject type="logic" fp_name="/wrapperProc_tb/clock">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/wrapperProc_tb/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/wrapperProc_tb/io_uart_tx">
+      <obj_property name="ElementShortName">io_uart_tx</obj_property>
+      <obj_property name="ObjectShortName">io_uart_tx</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/wb_inter_connect/uart/tx_data_r">
+      <obj_property name="ElementShortName">tx_data_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_data_r[7:0]</obj_property>
+      <obj_property name="Radix">ASCIIRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/wb_inter_connect/uart/tx_data_r">
+      <obj_property name="ElementShortName">tx_data_r[7:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_data_r[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/core/dpath/pc">
+      <obj_property name="ElementShortName">pc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/core/dpath/npc">
+      <obj_property name="ElementShortName">npc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">npc[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/wrapperProc_tb/inst_of_wrapperProc/step1step">
+      <obj_property name="ElementShortName">step1step</obj_property>
+      <obj_property name="ObjectShortName">step1step</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/io_m2_io_pwm_low">
+      <obj_property name="ElementShortName">io_m2_io_pwm_low</obj_property>
+      <obj_property name="ObjectShortName">io_m2_io_pwm_low</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/wb_inter_connect/m2/step_io_reg_step_x_do">
+      <obj_property name="ElementShortName">step_io_reg_step_x_do[31:0]</obj_property>
+      <obj_property name="ObjectShortName">step_io_reg_step_x_do[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/wb_inter_connect/m2/step_io_reg_step_y_do">
+      <obj_property name="ElementShortName">step_io_reg_step_y_do[31:0]</obj_property>
+      <obj_property name="ObjectShortName">step_io_reg_step_y_do[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/wrapperProc_tb/inst_of_wrapperProc/soc/wb_inter_connect/m2/pwm/enable">
+      <obj_property name="ElementShortName">enable</obj_property>
+      <obj_property name="ObjectShortName">enable</obj_property>
+   </wvobject>
+</wave_config>
