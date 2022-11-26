@@ -28,7 +28,7 @@ ${FPGA_SRCS_DIR}/ProcFinal.v:	${RTL_DIR}/SoC_Tile_fpga.v
 	cp --force ${RTL_DIR}/SoC_Tile_fpga.v ${FPGA_SRCS_DIR}/ProcFinal.v
 
 ${RTL_DIR}/SoC_Tile_fpga.v:	${RTL_DIR}/SoC_Tile.v
-	get_verilog_module_from_file.py ${RTL_DIR}/SoC_Tile.v IMem ../../util/fpga/IMem_vlsi.txt
+	../../util/fpga/get_verilog_module_from_file.py ${RTL_DIR}/SoC_Tile.v IMem ../../util/fpga/IMem_vlsi.txt
 	cd ../../util/fpga && ./replace_in_file.py ${RTL_DIR}/SoC_Tile.v ${RTL_DIR}/SoC_Tile_temp.v IMem_vlsi.txt IMem_fpga.txt
 	cd ../../util/fpga && ./replace_in_file.py ${RTL_DIR}/SoC_Tile_temp.v ${RTL_DIR}/SoC_Tile_fpga.v PC_START_vlsi.txt PC_START_fpga.txt
 
