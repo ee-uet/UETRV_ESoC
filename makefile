@@ -1,15 +1,25 @@
 RISCVBIN	:= $(shell pwd)/util/riscv_gcc_v10_1_ubuntu/bin
 PATH	:= $(PATH):$(RISCVBIN)
 SHELL	:= env PATH=$(PATH) /bin/bash
+
 SBT	:= $(shell which sbt)
-ifeq ( $(SBT), )
+ifeq ($(SBT), )
 	SBT	:= /usr/bin/sbt
+endif
+
+IVERILOG	:= $(shell which iverilog)
+ifeq ($(IVERILOG), )
+	IVERILOG	:= /usr/bin/iverilog
 endif
 
 all:	setup
 	cd examples/motor && make
 
-setup:	$(SBT)	riscv_gcc
+setup:	$(SBT)	riscv_gcc	$(IVERILOG)
+
+$(IVERILOG):
+	echo "Installing iverilog..."
+	sudo apt install iverilog -y
 
 $(SBT):
 	echo "Installing sbt..."
