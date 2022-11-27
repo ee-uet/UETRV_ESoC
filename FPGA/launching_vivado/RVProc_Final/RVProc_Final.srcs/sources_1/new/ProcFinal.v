@@ -1999,280 +1999,20 @@ module Core(
   assign dpath_io_ctrl_en_rs2 = ctrl_io_en_rs2; // @[core.scala 66:17]
   assign ctrl_io_inst = dpath_io_ctrl_inst; // @[core.scala 66:17]
 endmodule
-module DMem(
-  input         clock,
-  input  [7:0]  io_dmem_addr,
-  input  [31:0] io_dmem_wdata,
-  output [31:0] io_dmem_rdata,
-  input         io_wr_en,
-  input  [3:0]  io_st_type
-);
-`ifdef RANDOMIZE_MEM_INIT
-  reg [31:0] _RAND_0;
-  reg [31:0] _RAND_3;
-  reg [31:0] _RAND_6;
-  reg [31:0] _RAND_9;
-`endif // RANDOMIZE_MEM_INIT
-`ifdef RANDOMIZE_REG_INIT
-  reg [31:0] _RAND_1;
-  reg [31:0] _RAND_2;
-  reg [31:0] _RAND_4;
-  reg [31:0] _RAND_5;
-  reg [31:0] _RAND_7;
-  reg [31:0] _RAND_8;
-  reg [31:0] _RAND_10;
-  reg [31:0] _RAND_11;
-  reg [31:0] _RAND_12;
-`endif // RANDOMIZE_REG_INIT
-  reg [7:0] dmem_0 [0:63]; // @[memory.scala 59:25]
-  wire  dmem_0_io_dmem_rdata_MPORT_en; // @[memory.scala 59:25]
-  wire [5:0] dmem_0_io_dmem_rdata_MPORT_addr; // @[memory.scala 59:25]
-  wire [7:0] dmem_0_io_dmem_rdata_MPORT_data; // @[memory.scala 59:25]
-  wire [7:0] dmem_0_MPORT_data; // @[memory.scala 59:25]
-  wire [5:0] dmem_0_MPORT_addr; // @[memory.scala 59:25]
-  wire  dmem_0_MPORT_mask; // @[memory.scala 59:25]
-  wire  dmem_0_MPORT_en; // @[memory.scala 59:25]
-  reg  dmem_0_io_dmem_rdata_MPORT_en_pipe_0;
-  reg [5:0] dmem_0_io_dmem_rdata_MPORT_addr_pipe_0;
-  reg [7:0] dmem_1 [0:63]; // @[memory.scala 59:25]
-  wire  dmem_1_io_dmem_rdata_MPORT_en; // @[memory.scala 59:25]
-  wire [5:0] dmem_1_io_dmem_rdata_MPORT_addr; // @[memory.scala 59:25]
-  wire [7:0] dmem_1_io_dmem_rdata_MPORT_data; // @[memory.scala 59:25]
-  wire [7:0] dmem_1_MPORT_data; // @[memory.scala 59:25]
-  wire [5:0] dmem_1_MPORT_addr; // @[memory.scala 59:25]
-  wire  dmem_1_MPORT_mask; // @[memory.scala 59:25]
-  wire  dmem_1_MPORT_en; // @[memory.scala 59:25]
-  reg  dmem_1_io_dmem_rdata_MPORT_en_pipe_0;
-  reg [5:0] dmem_1_io_dmem_rdata_MPORT_addr_pipe_0;
-  reg [7:0] dmem_2 [0:63]; // @[memory.scala 59:25]
-  wire  dmem_2_io_dmem_rdata_MPORT_en; // @[memory.scala 59:25]
-  wire [5:0] dmem_2_io_dmem_rdata_MPORT_addr; // @[memory.scala 59:25]
-  wire [7:0] dmem_2_io_dmem_rdata_MPORT_data; // @[memory.scala 59:25]
-  wire [7:0] dmem_2_MPORT_data; // @[memory.scala 59:25]
-  wire [5:0] dmem_2_MPORT_addr; // @[memory.scala 59:25]
-  wire  dmem_2_MPORT_mask; // @[memory.scala 59:25]
-  wire  dmem_2_MPORT_en; // @[memory.scala 59:25]
-  reg  dmem_2_io_dmem_rdata_MPORT_en_pipe_0;
-  reg [5:0] dmem_2_io_dmem_rdata_MPORT_addr_pipe_0;
-  reg [7:0] dmem_3 [0:63]; // @[memory.scala 59:25]
-  wire  dmem_3_io_dmem_rdata_MPORT_en; // @[memory.scala 59:25]
-  wire [5:0] dmem_3_io_dmem_rdata_MPORT_addr; // @[memory.scala 59:25]
-  wire [7:0] dmem_3_io_dmem_rdata_MPORT_data; // @[memory.scala 59:25]
-  wire [7:0] dmem_3_MPORT_data; // @[memory.scala 59:25]
-  wire [5:0] dmem_3_MPORT_addr; // @[memory.scala 59:25]
-  wire  dmem_3_MPORT_mask; // @[memory.scala 59:25]
-  wire  dmem_3_MPORT_en; // @[memory.scala 59:25]
-  reg  dmem_3_io_dmem_rdata_MPORT_en_pipe_0;
-  reg [5:0] dmem_3_io_dmem_rdata_MPORT_addr_pipe_0;
-  wire [1:0] mask_shift = io_dmem_addr[1:0]; // @[memory.scala 63:32]
-  wire [4:0] data_shift = {mask_shift, 3'h0}; // @[memory.scala 64:31]
-  wire [3:0] _wmask_T_4 = {io_st_type[2:0],io_st_type[3]}; // @[memory.scala 66:36]
-  wire [3:0] _wmask_T_5 = mask_shift[0] ? _wmask_T_4 : io_st_type; // @[memory.scala 66:36]
-  wire [3:0] _wmask_T_8 = {_wmask_T_5[1:0],_wmask_T_5[3:2]}; // @[memory.scala 66:36]
-  wire [3:0] wmask = mask_shift[1] ? _wmask_T_8 : _wmask_T_5; // @[memory.scala 66:36]
-  wire [3:0] _T_1 = io_wr_en ? 4'hf : 4'h0; // @[Bitwise.scala 77:12]
-  wire [3:0] _T_2 = wmask & _T_1; // @[memory.scala 68:31]
-  wire [31:0] _wdata_T_7 = {io_dmem_wdata[30:0],io_dmem_wdata[31]}; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_8 = data_shift[0] ? _wdata_T_7 : io_dmem_wdata; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_11 = {_wdata_T_8[29:0],_wdata_T_8[31:30]}; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_12 = data_shift[1] ? _wdata_T_11 : _wdata_T_8; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_15 = {_wdata_T_12[27:0],_wdata_T_12[31:28]}; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_16 = data_shift[2] ? _wdata_T_15 : _wdata_T_12; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_19 = {_wdata_T_16[23:0],_wdata_T_16[31:24]}; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_20 = data_shift[3] ? _wdata_T_19 : _wdata_T_16; // @[memory.scala 70:39]
-  wire [31:0] _wdata_T_23 = {_wdata_T_20[15:0],_wdata_T_20[31:16]}; // @[memory.scala 70:39]
-  wire [31:0] wdata = data_shift[4] ? _wdata_T_23 : _wdata_T_20; // @[memory.scala 70:39]
-  reg [4:0] old_data_shift; // @[memory.scala 80:27]
-  wire [31:0] _io_dmem_rdata_T = {dmem_3_io_dmem_rdata_MPORT_data,dmem_2_io_dmem_rdata_MPORT_data,
-    dmem_1_io_dmem_rdata_MPORT_data,dmem_0_io_dmem_rdata_MPORT_data}; // @[memory.scala 83:31]
-  wire [31:0] _io_dmem_rdata_T_8 = {_io_dmem_rdata_T[0],_io_dmem_rdata_T[31:1]}; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_9 = old_data_shift[0] ? _io_dmem_rdata_T_8 : _io_dmem_rdata_T; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_12 = {_io_dmem_rdata_T_9[1:0],_io_dmem_rdata_T_9[31:2]}; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_13 = old_data_shift[1] ? _io_dmem_rdata_T_12 : _io_dmem_rdata_T_9; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_16 = {_io_dmem_rdata_T_13[3:0],_io_dmem_rdata_T_13[31:4]}; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_17 = old_data_shift[2] ? _io_dmem_rdata_T_16 : _io_dmem_rdata_T_13; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_20 = {_io_dmem_rdata_T_17[7:0],_io_dmem_rdata_T_17[31:8]}; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_21 = old_data_shift[3] ? _io_dmem_rdata_T_20 : _io_dmem_rdata_T_17; // @[memory.scala 83:49]
-  wire [31:0] _io_dmem_rdata_T_24 = {_io_dmem_rdata_T_21[15:0],_io_dmem_rdata_T_21[31:16]}; // @[memory.scala 83:49]
-  assign dmem_0_io_dmem_rdata_MPORT_en = dmem_0_io_dmem_rdata_MPORT_en_pipe_0;
-  assign dmem_0_io_dmem_rdata_MPORT_addr = dmem_0_io_dmem_rdata_MPORT_addr_pipe_0;
-  assign dmem_0_io_dmem_rdata_MPORT_data = dmem_0[dmem_0_io_dmem_rdata_MPORT_addr]; // @[memory.scala 59:25]
-  assign dmem_0_MPORT_data = wdata[7:0];
-  assign dmem_0_MPORT_addr = io_dmem_addr[7:2];
-  assign dmem_0_MPORT_mask = _T_2[0];
-  assign dmem_0_MPORT_en = io_wr_en;
-  assign dmem_1_io_dmem_rdata_MPORT_en = dmem_1_io_dmem_rdata_MPORT_en_pipe_0;
-  assign dmem_1_io_dmem_rdata_MPORT_addr = dmem_1_io_dmem_rdata_MPORT_addr_pipe_0;
-  assign dmem_1_io_dmem_rdata_MPORT_data = dmem_1[dmem_1_io_dmem_rdata_MPORT_addr]; // @[memory.scala 59:25]
-  assign dmem_1_MPORT_data = wdata[15:8];
-  assign dmem_1_MPORT_addr = io_dmem_addr[7:2];
-  assign dmem_1_MPORT_mask = _T_2[1];
-  assign dmem_1_MPORT_en = io_wr_en;
-  assign dmem_2_io_dmem_rdata_MPORT_en = dmem_2_io_dmem_rdata_MPORT_en_pipe_0;
-  assign dmem_2_io_dmem_rdata_MPORT_addr = dmem_2_io_dmem_rdata_MPORT_addr_pipe_0;
-  assign dmem_2_io_dmem_rdata_MPORT_data = dmem_2[dmem_2_io_dmem_rdata_MPORT_addr]; // @[memory.scala 59:25]
-  assign dmem_2_MPORT_data = wdata[23:16];
-  assign dmem_2_MPORT_addr = io_dmem_addr[7:2];
-  assign dmem_2_MPORT_mask = _T_2[2];
-  assign dmem_2_MPORT_en = io_wr_en;
-  assign dmem_3_io_dmem_rdata_MPORT_en = dmem_3_io_dmem_rdata_MPORT_en_pipe_0;
-  assign dmem_3_io_dmem_rdata_MPORT_addr = dmem_3_io_dmem_rdata_MPORT_addr_pipe_0;
-  assign dmem_3_io_dmem_rdata_MPORT_data = dmem_3[dmem_3_io_dmem_rdata_MPORT_addr]; // @[memory.scala 59:25]
-  assign dmem_3_MPORT_data = wdata[31:24];
-  assign dmem_3_MPORT_addr = io_dmem_addr[7:2];
-  assign dmem_3_MPORT_mask = _T_2[3];
-  assign dmem_3_MPORT_en = io_wr_en;
-  assign io_dmem_rdata = old_data_shift[4] ? _io_dmem_rdata_T_24 : _io_dmem_rdata_T_21; // @[memory.scala 83:49]
-  always @(posedge clock) begin
-    if (dmem_0_MPORT_en & dmem_0_MPORT_mask) begin
-      dmem_0[dmem_0_MPORT_addr] <= dmem_0_MPORT_data; // @[memory.scala 59:25]
-    end
-    dmem_0_io_dmem_rdata_MPORT_en_pipe_0 <= 1'h1;
-    if (1'h1) begin
-      dmem_0_io_dmem_rdata_MPORT_addr_pipe_0 <= io_dmem_addr[7:2];
-    end
-    if (dmem_1_MPORT_en & dmem_1_MPORT_mask) begin
-      dmem_1[dmem_1_MPORT_addr] <= dmem_1_MPORT_data; // @[memory.scala 59:25]
-    end
-    dmem_1_io_dmem_rdata_MPORT_en_pipe_0 <= 1'h1;
-    if (1'h1) begin
-      dmem_1_io_dmem_rdata_MPORT_addr_pipe_0 <= io_dmem_addr[7:2];
-    end
-    if (dmem_2_MPORT_en & dmem_2_MPORT_mask) begin
-      dmem_2[dmem_2_MPORT_addr] <= dmem_2_MPORT_data; // @[memory.scala 59:25]
-    end
-    dmem_2_io_dmem_rdata_MPORT_en_pipe_0 <= 1'h1;
-    if (1'h1) begin
-      dmem_2_io_dmem_rdata_MPORT_addr_pipe_0 <= io_dmem_addr[7:2];
-    end
-    if (dmem_3_MPORT_en & dmem_3_MPORT_mask) begin
-      dmem_3[dmem_3_MPORT_addr] <= dmem_3_MPORT_data; // @[memory.scala 59:25]
-    end
-    dmem_3_io_dmem_rdata_MPORT_en_pipe_0 <= 1'h1;
-    if (1'h1) begin
-      dmem_3_io_dmem_rdata_MPORT_addr_pipe_0 <= io_dmem_addr[7:2];
-    end
-    old_data_shift <= {mask_shift, 3'h0}; // @[memory.scala 64:31]
-  end
-// Register and memory initialization
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-`ifdef FIRRTL_BEFORE_INITIAL
-`FIRRTL_BEFORE_INITIAL
-`endif
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-`ifdef RANDOMIZE_MEM_INIT
-  _RAND_0 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    dmem_0[initvar] = _RAND_0[7:0];
-  _RAND_3 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    dmem_1[initvar] = _RAND_3[7:0];
-  _RAND_6 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    dmem_2[initvar] = _RAND_6[7:0];
-  _RAND_9 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    dmem_3[initvar] = _RAND_9[7:0];
-`endif // RANDOMIZE_MEM_INIT
-`ifdef RANDOMIZE_REG_INIT
-  _RAND_1 = {1{`RANDOM}};
-  dmem_0_io_dmem_rdata_MPORT_en_pipe_0 = _RAND_1[0:0];
-  _RAND_2 = {1{`RANDOM}};
-  dmem_0_io_dmem_rdata_MPORT_addr_pipe_0 = _RAND_2[5:0];
-  _RAND_4 = {1{`RANDOM}};
-  dmem_1_io_dmem_rdata_MPORT_en_pipe_0 = _RAND_4[0:0];
-  _RAND_5 = {1{`RANDOM}};
-  dmem_1_io_dmem_rdata_MPORT_addr_pipe_0 = _RAND_5[5:0];
-  _RAND_7 = {1{`RANDOM}};
-  dmem_2_io_dmem_rdata_MPORT_en_pipe_0 = _RAND_7[0:0];
-  _RAND_8 = {1{`RANDOM}};
-  dmem_2_io_dmem_rdata_MPORT_addr_pipe_0 = _RAND_8[5:0];
-  _RAND_10 = {1{`RANDOM}};
-  dmem_3_io_dmem_rdata_MPORT_en_pipe_0 = _RAND_10[0:0];
-  _RAND_11 = {1{`RANDOM}};
-  dmem_3_io_dmem_rdata_MPORT_addr_pipe_0 = _RAND_11[5:0];
-  _RAND_12 = {1{`RANDOM}};
-  old_data_shift = _RAND_12[4:0];
-`endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`ifdef FIRRTL_AFTER_INITIAL
-`FIRRTL_AFTER_INITIAL
-`endif
-`endif // SYNTHESIS
-endmodule
 module DMem_Interface(
-  input         clock,
-  input         reset,
-  input  [15:0] io_wbs_m2s_addr,
-  input  [31:0] io_wbs_m2s_data,
-  input         io_wbs_m2s_we,
-  input  [3:0]  io_wbs_m2s_sel,
-  input         io_wbs_m2s_stb,
-  output        io_wbs_ack_o,
-  output [31:0] io_wbs_data_o
+  input   clock,
+  input   reset,
+  input   io_wbs_m2s_stb,
+  output  io_wbs_ack_o
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
   reg [31:0] _RAND_1;
-  reg [31:0] _RAND_2;
 `endif // RANDOMIZE_REG_INIT
-  wire  dmem_clock; // @[dmem_interface.scala 35:20]
-  wire [7:0] dmem_io_dmem_addr; // @[dmem_interface.scala 35:20]
-  wire [31:0] dmem_io_dmem_wdata; // @[dmem_interface.scala 35:20]
-  wire [31:0] dmem_io_dmem_rdata; // @[dmem_interface.scala 35:20]
-  wire  dmem_io_wr_en; // @[dmem_interface.scala 35:20]
-  wire [3:0] dmem_io_st_type; // @[dmem_interface.scala 35:20]
-  wire  dmem_addr_match = io_wbs_m2s_addr[15:12] == 4'h1; // @[dmem_interface.scala 37:79]
-  wire  dmem_select = io_wbs_m2s_stb & dmem_addr_match; // @[dmem_interface.scala 39:41]
   reg  ack2; // @[dmem_interface.scala 48:28]
   wire  dmem_res_en = ack2 ^ io_wbs_m2s_stb; // @[dmem_interface.scala 49:49]
   reg  ack; // @[dmem_interface.scala 55:28]
-  reg  rd_resp; // @[dmem_interface.scala 60:24]
-  DMem dmem ( // @[dmem_interface.scala 35:20]
-    .clock(dmem_clock),
-    .io_dmem_addr(dmem_io_dmem_addr),
-    .io_dmem_wdata(dmem_io_dmem_wdata),
-    .io_dmem_rdata(dmem_io_dmem_rdata),
-    .io_wr_en(dmem_io_wr_en),
-    .io_st_type(dmem_io_st_type)
-  );
   assign io_wbs_ack_o = ack | ack2; // @[dmem_interface.scala 57:25]
-  assign io_wbs_data_o = rd_resp ? dmem_io_dmem_rdata : 32'h0; // @[dmem_interface.scala 62:24]
-  assign dmem_clock = clock;
-  assign dmem_io_dmem_addr = io_wbs_m2s_addr[7:0]; // @[dmem_interface.scala 42:41]
-  assign dmem_io_dmem_wdata = io_wbs_m2s_data; // @[dmem_interface.scala 43:23]
-  assign dmem_io_wr_en = io_wbs_m2s_we & dmem_select; // @[dmem_interface.scala 44:40]
-  assign dmem_io_st_type = io_wbs_m2s_sel; // @[dmem_interface.scala 45:23]
   always @(posedge clock) begin
     if (reset) begin // @[dmem_interface.scala 48:28]
       ack2 <= 1'h0; // @[dmem_interface.scala 48:28]
@@ -2284,7 +2024,6 @@ module DMem_Interface(
     end else begin
       ack <= io_wbs_m2s_stb; // @[dmem_interface.scala 56:18]
     end
-    rd_resp <= ~io_wbs_m2s_we & dmem_select; // @[dmem_interface.scala 40:41]
   end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
@@ -2326,8 +2065,6 @@ initial begin
   ack2 = _RAND_0[0:0];
   _RAND_1 = {1{`RANDOM}};
   ack = _RAND_1[0:0];
-  _RAND_2 = {1{`RANDOM}};
-  rd_resp = _RAND_2[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -5198,13 +4935,8 @@ module WB_InterConnect(
 `endif // RANDOMIZE_REG_INIT
   wire  dmem_clock; // @[wb_interconnect.scala 65:24]
   wire  dmem_reset; // @[wb_interconnect.scala 65:24]
-  wire [15:0] dmem_io_wbs_m2s_addr; // @[wb_interconnect.scala 65:24]
-  wire [31:0] dmem_io_wbs_m2s_data; // @[wb_interconnect.scala 65:24]
-  wire  dmem_io_wbs_m2s_we; // @[wb_interconnect.scala 65:24]
-  wire [3:0] dmem_io_wbs_m2s_sel; // @[wb_interconnect.scala 65:24]
   wire  dmem_io_wbs_m2s_stb; // @[wb_interconnect.scala 65:24]
   wire  dmem_io_wbs_ack_o; // @[wb_interconnect.scala 65:24]
-  wire [31:0] dmem_io_wbs_data_o; // @[wb_interconnect.scala 65:24]
   wire  imem_clock; // @[wb_interconnect.scala 66:24]
   wire  imem_reset; // @[wb_interconnect.scala 66:24]
   wire [31:0] imem_io_ibus_addr; // @[wb_interconnect.scala 66:24]
@@ -5351,13 +5083,8 @@ module WB_InterConnect(
   DMem_Interface dmem ( // @[wb_interconnect.scala 65:24]
     .clock(dmem_clock),
     .reset(dmem_reset),
-    .io_wbs_m2s_addr(dmem_io_wbs_m2s_addr),
-    .io_wbs_m2s_data(dmem_io_wbs_m2s_data),
-    .io_wbs_m2s_we(dmem_io_wbs_m2s_we),
-    .io_wbs_m2s_sel(dmem_io_wbs_m2s_sel),
     .io_wbs_m2s_stb(dmem_io_wbs_m2s_stb),
-    .io_wbs_ack_o(dmem_io_wbs_ack_o),
-    .io_wbs_data_o(dmem_io_wbs_data_o)
+    .io_wbs_ack_o(dmem_io_wbs_ack_o)
   );
   IMem_Interface imem ( // @[wb_interconnect.scala 66:24]
     .clock(imem_clock),
@@ -5522,10 +5249,6 @@ module WB_InterConnect(
   assign io_m3_irq = m3_io_motor_irq; // @[wb_interconnect.scala 164:24]
   assign dmem_clock = clock;
   assign dmem_reset = reset;
-  assign dmem_io_wbs_m2s_addr = wbm_dbus_io_wbm_m2s_addr; // @[wb_interconnect.scala 89:20]
-  assign dmem_io_wbs_m2s_data = wbm_dbus_io_wbm_m2s_data; // @[wb_interconnect.scala 89:20]
-  assign dmem_io_wbs_m2s_we = wbm_dbus_io_wbm_m2s_we; // @[wb_interconnect.scala 89:20]
-  assign dmem_io_wbs_m2s_sel = wbm_dbus_io_wbm_m2s_sel; // @[wb_interconnect.scala 89:20]
   assign dmem_io_wbs_m2s_stb = wbm_dbus_io_wbm_m2s_stb; // @[wb_interconnect.scala 89:20]
   assign imem_clock = clock;
   assign imem_reset = reset;
@@ -5542,7 +5265,7 @@ module WB_InterConnect(
   assign wbm_dbus_io_dbus_st_type = io_dbus_st_type; // @[wb_interconnect.scala 75:20]
   assign wbm_dbus_io_dbus_ld_type = io_dbus_ld_type; // @[wb_interconnect.scala 75:20]
   assign wbm_dbus_io_wbm_ack_i = dmem_sel ? dmem_io_wbs_ack_o : _wbm_dbus_io_wbm_ack_i_T_5; // @[wb_interconnect.scala 130:32]
-  assign wbm_dbus_io_wbm_data_i = dmem_sel ? dmem_io_wbs_data_o : _wbm_dbus_io_wbm_data_i_T_5; // @[wb_interconnect.scala 123:32]
+  assign wbm_dbus_io_wbm_data_i = dmem_sel ? 32'h0 : _wbm_dbus_io_wbm_data_i_T_5; // @[wb_interconnect.scala 123:32]
   assign uart_clock = clock;
   assign uart_reset = reset;
   assign uart_io_uart_select = address == 4'h2; // @[wb_interconnect.scala 82:35]

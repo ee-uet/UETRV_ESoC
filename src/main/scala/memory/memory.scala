@@ -80,5 +80,6 @@ class DMem extends Module with Config {
   val old_data_shift = Reg(UInt(data_shift.getWidth.W))
   old_data_shift := data_shift
 
-  io.dmem_rdata := dmem(addr).asUInt.rotateRight(old_data_shift)
+  //io.dmem_rdata := dmem(addr).asUInt.rotateRight(old_data_shift)
+  io.dmem_rdata := 0.asUInt
 }
