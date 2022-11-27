@@ -162,7 +162,7 @@ initial #0
     $display("Testbench failed.");
     $display("%c[0m",27);
     //$finish; 
-    $finish_and_return(1);
+    $finish_and_return(1);	// this is an iverilog specific task
  end
 
  initial        // logic has been verified through practical demonstration using FPGA, hence this testbench is only checking connections by applying inputs and observing that the outputs are toggling as a result of the inputs
@@ -183,7 +183,7 @@ initial #0
     wait(step2step == 1'b1);
     @ (negedge step1step);
     wait(step2step == 1'b0);
-    #100000000000000
+    #1000
     
     $display("Testbench passed.");
     $finish;
