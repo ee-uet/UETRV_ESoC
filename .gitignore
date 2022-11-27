@@ -4,3 +4,4 @@ target
 rtl/SoC_Tile_temp.v
 tb/a.out
 tb/SoC_tb.vcd
+util/riscv_gcc_v10_1_ubuntu
