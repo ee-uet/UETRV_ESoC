@@ -3,6 +3,7 @@ name: CI
 on:
   # Runs on Every Push
   push:
+    branches: [ "UETRV_ESoC_v2" ]
   # Runs on Pull Requests
   pull_request:
   workflow_dispatch:
@@ -11,8 +12,10 @@ jobs:
   pdk:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Run testbench
-        run: ls
+        run: make run_tb
             #- uses: actions/checkout@v2
 
             #- name: Set up QEMU
