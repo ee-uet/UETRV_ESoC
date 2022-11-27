@@ -16,6 +16,15 @@ jobs:
 
       - name: Run testbench and compile motor control program
         run: |
-          make run_tb
-          make
-
+          pwd
+          ls
+      #     make run_tb
+      #     make
+      
+      # - name: Cache riscv gcc
+      #   id: riscv-gcc
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-riscv-gcc
+      #   with:
+      #     path: 
