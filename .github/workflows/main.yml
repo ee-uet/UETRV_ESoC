@@ -23,9 +23,9 @@ jobs:
           path: /home/runner/work/UETRV_ESoC/UETRV_ESoC/util
           key: riscv-gcc-${{ hashFiles('riscv-gcc-version.txt') }}
 
-      - name: Run testbench and compile motor control program
-        run: |
-          make run_tb
-          make
-
+      - name: Run testbench
+        run: make run_tb
+      
+      - name: Compile motor control program (firmware)
+        run: make
 
