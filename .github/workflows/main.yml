@@ -13,18 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Cache riscv gcc
+        id: riscv-gcc
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-riscv-gcc
+        with:
+          path: /home/runner/work/UETRV_ESoC/UETRV_ESoC/util
 
       - name: Run testbench and compile motor control program
         run: |
-          pwd
-          ls
-      #     make run_tb
-      #     make
-      
-      # - name: Cache riscv gcc
-      #   id: riscv-gcc
-      #   uses: actions/cache@v3
-      #   env:
-      #     cache-name: cache-riscv-gcc
-      #   with:
-      #     path: 
+          make run_tb
+          make
