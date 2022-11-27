@@ -7,6 +7,7 @@ on:
   # Runs on Pull Requests
   pull_request:
   workflow_dispatch:
+    branches: [ "UETRV_ESoC_v2" ]
 
 jobs:
   run_tb:
