@@ -21,6 +21,7 @@ jobs:
           cache-name: cache-riscv-gcc
         with:
           path: /home/runner/work/UETRV_ESoC/UETRV_ESoC/util
+          key: riscv-gcc-${{ hashFiles('riscv-gcc-version.txt') }}
 
       - name: Run testbench and compile motor control program
         run: |
