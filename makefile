@@ -41,11 +41,12 @@ $(RISCVBIN):
 	rm riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz
 	mv riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14 util/riscv_gcc_v10_1_ubuntu
 
-fpga:	FORCE
+fpga:	FORCE	setup
 	cd examples/motor && make fpga
 
-vlsi:	FORCE
-	cd examples/motor && make vlsi
+run_tb:	fpga
+	echo "Running testbench..."
+	cd tb && iverilog SoC_tb.v ../rtl/SoC_Tile.v && vvp a.out
 
 FORCE:
 	

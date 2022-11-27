@@ -115,7 +115,7 @@ initial #0
 	
     $readmemh(
         `ifndef GATELEVEL
-            "imem.txt"
+            "imem_for_sim.txt"
         `else
             "../../sim/imem.txt"
         `endif
