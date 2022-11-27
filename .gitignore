@@ -2,3 +2,5 @@ project/project
 project/target
 target
 rtl/SoC_Tile_temp.v
+tb/a.out
+tb/SoC_tb.vcd
