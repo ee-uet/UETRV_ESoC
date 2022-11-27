@@ -182,7 +182,7 @@ initial #0
     wait(step2step == 1'b1);
     @ (negedge step1step);
     wait(step2step == 1'b0);
-    #1000
+    #1000000000000
     
     $display("Testbench passed.");
     $finish;
