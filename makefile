@@ -1,4 +1,6 @@
 RISCVBIN=$(shell pwd)/util/riscv_gcc_v10_1_ubuntu/bin
+PATH  := $(PATH):$(RISCVBIN)
+SHELL := env PATH=$(PATH) /bin/bash
 
 all:	setup
 	cd examples/motor && make
