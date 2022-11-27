@@ -17,6 +17,8 @@ jobs:
       - name: Run testbench
         run: make run_tb
 
+      - name: Compile example motor control program
+        run: make
       #- name: Install dependencies
       #  run: |
       #    sudo mkdir -p ${{ env.PDK_ROOT }}

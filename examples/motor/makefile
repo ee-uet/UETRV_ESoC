@@ -43,7 +43,6 @@ build/imem.c:	build/imem.txt
 
 build/imem.txt:	build/imem.bin
 	../../util/make_txt_imem.py $< > $@
-	cp -u $@ ../../tb
 
 build/imem.bin:	build/imem.elf
 	${RV64OBJCOPY} -O binary --only-section=.data* --only-section=.text* $< $@
@@ -66,7 +65,6 @@ build/uart.o:	interfaces/uart.c interfaces/uart.h
 
 build/main.o:	main/main.c main/defs.h
 	mkdir -p $(@D)
-	echo PATH is ${PATH}
 	${RV64CC} -c -o $@ $< ${CFLAGS} 
 
 build:
