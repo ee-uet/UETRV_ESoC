@@ -14,15 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Run testbench
-        run: make run_tb
+      - name: Run testbench and compile motor control program
+        run: |
+          make run_tb
+          make
 
-      - name: Compile example motor control program
-        run: make
-      #- name: Install dependencies
-      #  run: |
-      #    sudo mkdir -p ${{ env.PDK_ROOT }}
-      #    sudo chown -R $USER:$USER ${{ env.PDK_ROOT }}
-      #    make install
-      #    make openlane
-      #    make pdk-with-volare
