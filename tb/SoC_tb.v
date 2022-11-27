@@ -161,7 +161,8 @@ initial #0
     $display("%c[1;31m",27);
     $display("Testbench failed.");
     $display("%c[0m",27);
-    $finish; 
+    //$finish; 
+    $finish_and_return(1);
  end
 
  initial        // logic has been verified through practical demonstration using FPGA, hence this testbench is only checking connections by applying inputs and observing that the outputs are toggling as a result of the inputs
@@ -182,7 +183,7 @@ initial #0
     wait(step2step == 1'b1);
     @ (negedge step1step);
     wait(step2step == 1'b0);
-    #1000
+    #100000000000000
     
     $display("Testbench passed.");
     $finish;
