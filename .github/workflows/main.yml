@@ -2,8 +2,8 @@ name: CI
 
 on:
   # Runs on Every Push
-  # push:
-  #   branches: [ "UETRV_ESoC_v2" ]
+  push:
+    branches: [ "UETRV_ESoC_v2" ]
   # Runs on Pull Requests
   pull_request:
   workflow_dispatch:
