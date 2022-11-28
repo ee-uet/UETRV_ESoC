@@ -13,7 +13,8 @@ UETRV_ESoC is a RISC-V based Embedded class SoC integrating 3-stage pipelined co
 <img src="docs/soc.png" alt="soc" width="700"/>
 
 ### SoC Memory Map
-The memory map of SOC is shown in the following table
+The memory map of SOC is shown in the following table:
+
 | Base Address        |    Description            |   Attributes    |
 |:-------------------:|:-------------------------:|:---------------:|
 | 0x0000_0000         |      Instruction Memory   |      R-X-W      |
