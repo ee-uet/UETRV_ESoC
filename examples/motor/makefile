@@ -28,7 +28,7 @@ ${RTL_DIR}/SoC_Tile_fpga.v:	${RTL_DIR}/SoC_Tile.v
 	cd ../../util/fpga && ./replace_in_file.py ${RTL_DIR}/SoC_Tile_temp.v ${RTL_DIR}/SoC_Tile_fpga.v PC_START_vlsi.txt PC_START_fpga.txt
 	rm ${RTL_DIR}/SoC_Tile_temp.v
 
-${RTL_DIR}/SoC_Tile.v:	$(shell find ${SCALA_SRC_DIR})
+${RTL_DIR}/SoC_Tile.v:	$(SCALA_SRC_FILES)
 	cd ../.. && sbt run
 
 ${FPGA_SRCS_DIR}/main.mem: build/imem.txt

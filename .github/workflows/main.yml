@@ -27,5 +27,5 @@ jobs:
         run: make run_tb
       
       - name: Compile motor control program (firmware)
-        run: make
+        run: make firmware
 

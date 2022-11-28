@@ -1,3 +1,5 @@
+SCALA_SRC_DIR=src/main/scala
+SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
 RISCVBIN	:= $(shell pwd)/util/riscv_gcc_v10_1_ubuntu/bin
 PATH	:= $(PATH):$(RISCVBIN)
 SHELL	:= env PATH=$(PATH) /bin/bash
@@ -12,10 +14,10 @@ ifeq ($(IVERILOG), )
 	IVERILOG	:= /usr/bin/iverilog
 endif
 
-all:	setup
+firmware:	$(RISCVBIN)
 	cd examples/motor && make
 
-setup:	$(SBT)	riscv_gcc	$(IVERILOG)
+setup:	$(SBT)	$(IVERILOG)
 
 $(IVERILOG):
 	@ echo -e "\n\nInstalling iverilog..."
@@ -32,8 +34,6 @@ $(SBT):
 	sudo apt-get update
 	sudo apt-get install sbt -y
 
-riscv_gcc:	$(RISCVBIN)
-
 $(RISCVBIN):
 	@ echo -e "\n\nInstalling riscv_gcc..."
 	wget -q $(shell cat riscv-gcc-url.txt)
@@ -42,14 +42,12 @@ $(RISCVBIN):
 	rm riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz
 	mv temp/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14 util/riscv_gcc_v10_1_ubuntu
 
-fpga:	FORCE	setup
+fpga:	$(SBT)
 	cd examples/motor && make fpga
 
-run_tb:	fpga
+run_tb:	fpga	$(IVERILOG)
 	@ echo -e "\n\nRunning testbench..."
-	cd tb && iverilog SoC_tb.v ../rtl/SoC_Tile.v && vvp a.out
-
-FORCE:
+	cd tb && make
 	
 
 
