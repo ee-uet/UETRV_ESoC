@@ -18,11 +18,11 @@ all:	setup
 setup:	$(SBT)	riscv_gcc	$(IVERILOG)
 
 $(IVERILOG):
-	echo "Installing iverilog..."
+	@ echo -e "\n\nInstalling iverilog..."
 	sudo apt install iverilog -y
 
 $(SBT):
-	echo "Installing sbt..."
+	@ echo -e "\n\nInstalling sbt..."
 	sudo apt-get update
 	sudo apt-get install apt-transport-https curl gnupg -yqq
 	echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
@@ -35,17 +35,18 @@ $(SBT):
 riscv_gcc:	$(RISCVBIN)
 
 $(RISCVBIN):
-	echo "Installing riscv_gcc..."
-	wget -q https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.08/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz
-	tar -xvf riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz > /dev/null
+	@ echo -e "\n\nInstalling riscv_gcc..."
+	wget -q $(shell cat riscv-gcc-url.txt)
+	mkdir -p temp
+	tar -xf riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz -C temp
 	rm riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14.tar.gz
-	mv riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14 util/riscv_gcc_v10_1_ubuntu
+	mv temp/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14 util/riscv_gcc_v10_1_ubuntu
 
 fpga:	FORCE	setup
 	cd examples/motor && make fpga
 
 run_tb:	fpga
-	echo "Running testbench..."
+	@ echo -e "\n\nRunning testbench..."
 	cd tb && iverilog SoC_tb.v ../rtl/SoC_Tile.v && vvp a.out
 
 FORCE:
