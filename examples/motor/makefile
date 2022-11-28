@@ -1,7 +1,4 @@
 FPGA_SRCS_DIR=../../FPGA/launching_vivado/RVProc_Final/RVProc_Final.srcs/sources_1/new
-SCALA_SRC_DIR=../../src/main/scala
-SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
-RTL_DIR=../../rtl
 RV64AS=riscv64-unknown-elf-as
 RV64CC=riscv64-unknown-elf-gcc
 RV64OBJCOPY=riscv64-unknown-elf-objcopy
@@ -11,25 +8,9 @@ LDFLAGS=-T linker.ld -nostartfiles
 
 all:	build/imem.scala build/imem.c ${FPGA_SRCS_DIR}/main.mem
 
-sim:	all
-
 run:	all
 	cd ${FPGA_SRCS_DIR} && cd ../../../.. && make
 	# gnome-terminal -- ./receive_pos.py
-
-fpga:	${FPGA_SRCS_DIR}/ProcFinal.v
-
-${FPGA_SRCS_DIR}/ProcFinal.v:	${RTL_DIR}/SoC_Tile_fpga.v
-	cp --force ${RTL_DIR}/SoC_Tile_fpga.v ${FPGA_SRCS_DIR}/ProcFinal.v
-
-${RTL_DIR}/SoC_Tile_fpga.v:	${RTL_DIR}/SoC_Tile.v
-	../../util/fpga/get_verilog_module_from_file.py ${RTL_DIR}/SoC_Tile.v IMem ../../util/fpga/IMem_vlsi.txt
-	cd ../../util/fpga && ./replace_in_file.py ${RTL_DIR}/SoC_Tile.v ${RTL_DIR}/SoC_Tile_temp.v IMem_vlsi.txt IMem_fpga.txt
-	cd ../../util/fpga && ./replace_in_file.py ${RTL_DIR}/SoC_Tile_temp.v ${RTL_DIR}/SoC_Tile_fpga.v PC_START_vlsi.txt PC_START_fpga.txt
-	rm ${RTL_DIR}/SoC_Tile_temp.v
-
-${RTL_DIR}/SoC_Tile.v:	$(SCALA_SRC_FILES)
-	cd ../.. && sbt run
 
 ${FPGA_SRCS_DIR}/main.mem: build/imem.txt
 	echo "@0" > $@
