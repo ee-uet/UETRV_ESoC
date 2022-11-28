@@ -1,8 +1,9 @@
-SCALA_SRC_DIR=src/main/scala
-SCALA_SRC_FILES=$(find ${SCALA_SRC_DIR})
+RTL_DIR		:= rtl
+SCALA_SRC_DIR	:= src/main/scala
+SCALA_SRC_FILES	:= $(find ${SCALA_SRC_DIR})
 RISCVBIN	:= $(shell pwd)/util/riscv_gcc_v10_1_ubuntu/bin
-PATH	:= $(PATH):$(RISCVBIN)
-SHELL	:= env PATH=$(PATH) /bin/bash
+PATH		:= $(PATH):$(RISCVBIN)
+SHELL		:= env PATH=$(PATH) /bin/bash
 
 SBT	:= $(shell which sbt)
 ifeq ($(SBT), )
@@ -49,5 +50,7 @@ run_tb:	fpga	$(IVERILOG)
 	@ echo -e "\n\nRunning testbench..."
 	cd tb && make
 	
+$(RTL_DIR)/SoC_Tile.v:	$(SCALA_SRC_FILES)
+	sbt run
 
 
