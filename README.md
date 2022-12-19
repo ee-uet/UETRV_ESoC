@@ -10,7 +10,7 @@ UETRV_ESoC is a RISC-V based Embedded class SoC integrating 3-stage pipelined co
 - Three motor control modules, capable of controlling dc-servo motors with encoder feedback, have been integrated for coordinated multi-axis motion control.  
 
 ### Update
-UETRV_ESoC has been updated to version 2 i.e. UETRV_ESoC_v2 with some bugfixes. Please see the repository [UETRV_ESoC_v2](https://github.com/ee-uet/UETRV_ESoC_v2) for a description of the updates.
+UETRV_ESoC has been updated to version 2 i.e. UETRV_ESoC_v2 with some bugfixes, by Muhammad Usama Zubair. Please see the repository [UETRV_ESoC_v2](https://github.com/ee-uet/UETRV_ESoC_v2) for a description of the updates, as well as back-end design, for submission to Skywater Open MPW-8.
 
 ### SoC Block Diagram
 <img src="docs/soc.png" alt="soc" width="700"/>
