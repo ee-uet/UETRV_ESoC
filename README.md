@@ -56,7 +56,7 @@ Navigate to the project directory:
 
 Run the Makefile:
 
-`make -f makefile.mk`
+`make -f Makefile.mk`
 
 Configuring BusyBox Network Utilities
 During the BusyBox configuration, open the configuration panel for BusyBox.
