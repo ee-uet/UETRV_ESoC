@@ -3,7 +3,7 @@
 This Makefile is designed to facilitate the process of booting Linux on the UET-RV-PCORE platform. Authored by Wajid Ali, Abdullah Azhar, Uneeb Kamal and Massoma Zia ,an Undergraduate Students specializing in Electrical Engineering at the Department of Electrical Engineering, University of Engineering and Technology Lahore (UET Lahore), this Makefile is crafted as part of the Digital Design Research Lab (DDRC) at UET Lahore.
 
 **System Requirements**
-RISC-V 32-bit toolchain
+RISC-V toolchain
 
 **Installing the RISC-V GNU Toolchain**
 Pre-Requisites
@@ -56,7 +56,7 @@ Navigate to the project directory:
 
 Run the Makefile:
 
-`make -f makefile.mk`
+`make -f Makefile.mk`
 
 Configuring BusyBox Network Utilities
 During the BusyBox configuration, open the configuration panel for BusyBox.

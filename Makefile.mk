@@ -1,4 +1,22 @@
+
 # Makefile for BOOTing Linux on UETRV_PCORE
+# This makefile is authored by Wajid Ali, an Undergraduate Student specializing in Electrical Engineering
+# at the Department of Electrical Engineering, University of Engineering and Technology Lahore (UET Lahore).
+# The makefile is crafted as part of the Digital Design Research Lab (DDRC) at UET Lahore and serves the
+# purpose of generating imm.bin and imm.txt files, facilitating the seamless booting of the Linux operating
+# system on the UET-RV-PCORE platform. The UET-RV-PCORE is a cutting-edge platform for research and
+# experimentation in the field of digital design and embedded systems.
+# 
+# For inquiries, please contact:
+# Wajid Ali
+# Email: 2021ee79@student.uet.edu.pk
+# 
+# Note: During the kernel build process, you may encounter prompts. Press "n" (no), followed by "1" (one),
+# then press "n" (no) again, and finally, press Enter to proceed with the default options.
+# 
+# Copyright (c) Digital Design Research Lab (DDRC UET),
+# University of Engineering and Technology Lahore. All rights reserved.
+
 
 # Variables
 BUILDROOT_VERSION = buildroot-2021.05
